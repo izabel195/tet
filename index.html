@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Para Fernanda 💖</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #ec7aa8;
+      font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      padding: 20px;
+    }
+
+    .envelope-container {
+      position: relative;
+      width: 90%;
+      max-width: 300px;
+      height: 150px;
+      cursor: pointer;
+      transition: transform 0.5s;
+      margin-top: 60px;
+    }
+
+    .flap {
+      position: absolute;
+      width: 100%;
+      height: 40%;
+      background-color: #c2185b;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top;
+      transition: transform 1s ease-in-out;
+      z-index: 3;
+    }
+
+    .base {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #f8bbd0;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+      z-index: 1;
+    }
+
+    .card {
+      position: absolute;
+      width: 100%;
+      background-color: white;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      border-radius: 10px;
+      padding: 14px;
+      box-sizing: border-box;
+      opacity: 0;
+      top: 100%;
+      transition: top 1s ease, opacity 1s ease;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-align: center;
+      height: auto;
+      max-height: 400px;
+    }
+
+    .card.open {
+      top: -450px;
+      opacity: 1;
+    }
+
+    .flap.open {
+      transform: rotateX(180deg);
+    }
+
+    .card h2 {
+      font-size: 18px;
+      color: #880e4f;
+      margin: 8px 0 4px 0;
+    }
+
+    .card p {
+      color: #4a148c;
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .carousel-container {
+      width: 90%;
+      max-width: 240px;
+      height: auto;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      background: rgba(255, 255, 255, 0.9);
+      position: relative;
+    }
+
+    .carousel {
+      display: flex;
+      transition: transform 0.4s ease;
+    }
+
+    .carousel img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .carousel-buttons {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+
+    .carousel-buttons button {
+      background: rgba(0,0,0,0.3);
+      border: none;
+      color: rgb(177, 26, 89);
+      font-size: 22px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    .btn-share {
+      margin-top: 20px;
+      background: #25D366;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: background 0.3s ease;
+      z-index: 1000;
+    }
+
+    .btn-share:hover {
+      background: #1ebe5d;
+    }
+
+    audio {
+      display: none;
+    }
+
+    @media (min-width: 600px) {
+      .container {
+        flex-direction: row;
+        justify-content: center;
+      }
+
+      .btn-share {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="envelope-container" onclick="abrirEnvelope()">
+    <div class="flap" id="flap"></div>
+    <div class="base"></div>
+    <div class="card" id="card">
+      <h2>Querida Fernanda 💌</h2>
+      <p>Você não me deu apenas amor, mas também acolhimento, carinho e apoio incondicional.</p>
+      <p>É uma honra poder te chamar de segunda mãe. Obrigado por tudo que você é e representa na minha vida.</p>
+      <p>Que esta homenagem traga um pedacinho da alegria que você me dá todos os dias.</p>
+      <p><strong>Com todo meu amor 💖 do seu filho Uilian Games</strong></p>
+    </div>
+  </div>
+
+  <div class="carousel-container">
+    <div class="carousel" id="carousel">
+      <img src="FE1.jpg" alt="Foto 1">
+      <img src="FE2.jpg" alt="Foto 2">
+      <img src="FE3.jpg" alt="Foto 3">
+    </div>
+    <div class="carousel-buttons">
+      <button onclick="moverCarrossel(-1)">❮</button>
+      <button onclick="moverCarrossel(1)">❯</button>
+    </div>
+  </div>
+</div>
+
+<button class="btn-share" onclick="compartilharWhatsApp()">💬 Compartilhar</button>
+
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_b3f4446e7e.mp3?filename=romantic-piano-110095.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  let aberto = false;
+
+  function abrirEnvelope() {
+    const flap = document.getElementById('flap');
+    const card = document.getElementById('card');
+
+    if (!aberto) {
+      flap.classList.add('open');
+      card.classList.add('open');
+      aberto = true;
+      setTimeout(() => {
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 500);
+    } else {
+      flap.classList.remove('open');
+      card.classList.remove('open');
+      aberto = false;
+      setTimeout(() => {
+        flap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 500);
+    }
+  }
+
+  function compartilharWhatsApp() {
+    const link = encodeURIComponent("🌹 Fernanda, preparei algo especial pra você 💖 https://seusite.com/cartao");
+    window.open(`https://wa.me/?text=${link}`, '_blank');
+  }
+
+  let index = 0;
+  function moverCarrossel(direcao) {
+    const carousel = document.getElementById('carousel');
+    const totalSlides = carousel.children.length;
+    index += direcao;
+    if (index < 0) index = totalSlides - 1;
+    if (index >= totalSlides) index = 0;
+    carousel.style.transform = `translateX(-${index * 100}%)`;
+  }
+</script>
+
+</body>
+</html>
