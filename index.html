@@ -29,7 +29,7 @@
       height: 150px;
       cursor: pointer;
       transition: transform 0.5s;
-      margin-top: 350px;
+      margin-top: 60px;
     }
 
     .flap {
@@ -71,7 +71,7 @@
       gap: 10px;
       text-align: center;
       height: auto;
-      max-height: 370px;
+      max-height: 400px;
     }
 
     .card.open {
@@ -112,7 +112,7 @@
     }
 
     .carousel img {
-      width: 400px;
+      width: 100%;
       height: auto;
       object-fit: cover;
     }
@@ -157,7 +157,7 @@
       display: none;
     }
 
-    @media (min-width: 400px) {
+    @media (min-width: 600px) {
       .container {
         flex-direction: row;
         justify-content: center;
@@ -173,7 +173,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container" style="flex-direction: column !important;">
   <div class="envelope-container" onclick="abrirEnvelope()">
     <div class="flap" id="flap"></div>
     <div class="base"></div>
